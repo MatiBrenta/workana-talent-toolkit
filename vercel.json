@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/get-job", "destination": "/api/get-job" }
+  ]
+}
