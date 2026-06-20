@@ -650,7 +650,6 @@
 
   // ── GENERATE KIT ──
   function generateKit() {
-    // Use the shortlink if available (set after import), else the raw input
     const workableUrl = window._importedShortlink || document.getElementById('workableUrl').value.trim();
     const companyName = document.getElementById('companyName').value.trim();
     const jobTitle = document.getElementById('jobTitle').value.trim();
@@ -667,8 +666,11 @@
     });
 
     const data = { workableUrl, companyName, jobTitle, companyDesc, hintText, values };
-    localStorage.setItem('workana_toolkit_config', JSON.stringify(data));
-    window.location.href = 'toolkit-unifin.html';
+
+    // Encode config into URL hash — shareable link, no server needed
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    localStorage.setItem('workana_toolkit_config', JSON.stringify(data)); // fallback
+    window.location.href = 'toolkit-unifin.html#' + encoded;
   }
 
   // ── INIT: render 6 empty value cards ──
