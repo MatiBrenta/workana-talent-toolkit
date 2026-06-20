@@ -3,1033 +3,640 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workana × Unifin — Kit de Entrevista</title>
+<title>Kit de Entrevista — Workana</title>
+<link rel="icon" href="/public/logos/workana-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    font-weight: 500;
+    font-display: swap;
+    src: url('/public/fonts/ibm-plex-sans-medium.ttf') format('truetype');
+  }
+
   :root {
-    --bg: #0b0f1a;
-    --surface: #131929;
-    --surface2: #1a2235;
-    --border: #ffffff12;
-    --accent: #4f8ef7;
-    --accent2: #7c5cfc;
-    --gold: #f5a623;
-    --green: #22c55e;
-    --text: #e8eaf0;
-    --muted: #8a93a8;
-    --edit-ring: #f5a62366;
+    --wk-blue:       #0a52d9;
+    --wk-blue-hover: #0848bc;
+    --wk-navy:       #002d72;
+    --wk-navy-deep:  #00143c;
+    --wk-white:      #ffffff;
+    --wk-mint:       #69dab9;
+    --wk-periwinkle: #748af3;
+    --wk-lavender:   #dcb0e7;
+    --wk-fg-subtle:  #7a8aa6;
+    --wk-border:     rgba(255,255,255,.09);
+    --wk-border-card:rgba(255,255,255,.06);
+    --wk-surface:    rgba(255,255,255,.04);
+    --wk-surface2:   rgba(255,255,255,.07);
+    --wk-shadow-2:   0 6px 16px rgba(0,45,114,.18), 0 2px 4px rgba(0,45,114,.10);
+    --wk-gradient-1: linear-gradient(120deg, #0a78ff 0%, #dcb0e7 100%);
+    --wk-gradient-2: linear-gradient(120deg, #0053b8 0%, #86319b 100%);
+    --edit-ring:     rgba(105,218,185,.4);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Open Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    background: var(--wk-navy-deep);
+    color: var(--wk-white);
     line-height: 1.7;
     font-size: 15px;
   }
 
+  /* ── TOP BAR ── */
+  .topbar { height: 4px; background: var(--wk-gradient-2); }
+
+  /* ── NAV ── */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--wk-border);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(0,20,60,.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  nav img { height: 26px; }
+
   /* ── TOOLBAR ── */
-  #toolbar {
-    position: fixed;
-    top: 16px;
-    right: 20px;
-    z-index: 100;
-    display: flex;
-    gap: 10px;
-  }
-
+  .toolbar { display: flex; gap: 8px; }
   .tool-btn {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 16px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 200ms;
-    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--wk-border);
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 180ms;
+    letter-spacing: .01em;
   }
+  #editToggle { background: var(--wk-surface); color: var(--wk-fg-subtle); }
+  #editToggle:hover { border-color: rgba(255,255,255,.2); color: var(--wk-white); }
+  #editToggle.active { background: rgba(105,218,185,.12); border-color: rgba(105,218,185,.35); color: var(--wk-mint); }
+  #shareBtn { background: var(--wk-blue); color: #fff; border-color: var(--wk-blue); }
+  #shareBtn:hover { background: var(--wk-blue-hover); }
+  #shareBtn.copied { background: rgba(105,218,185,.2); border-color: var(--wk-mint); color: var(--wk-mint); }
 
-  #editToggle {
-    background: var(--surface2);
-    color: var(--muted);
-  }
-  #editToggle.active {
-    background: #f5a62322;
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-  #shareBtn {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  #shareBtn:hover { background: #3a7de8; }
-  #shareBtn.copied {
-    background: #22c55e;
-    border-color: #22c55e;
-  }
-
-  /* ── EDIT MODE HINTS ── */
+  /* ── EDIT MODE ── */
   body.edit-mode [contenteditable="true"] {
     outline: 1.5px dashed var(--edit-ring);
-    border-radius: 4px;
-    min-width: 2ch;
-    cursor: text;
+    border-radius: 3px; cursor: text; min-width: 2ch;
   }
   body.edit-mode [contenteditable="true"]:focus {
-    outline: 2px solid var(--gold);
-    background: #f5a62308;
+    outline: 2px solid var(--wk-mint);
+    background: rgba(105,218,185,.05);
   }
 
   /* ── HERO ── */
   header {
-    padding: 100px 24px 70px;
+    padding: 72px 24px 52px;
     text-align: center;
-    max-width: 760px;
+    max-width: 700px;
     margin: 0 auto;
   }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #4f8ef714;
-    border: 1px solid #4f8ef733;
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 100px;
-    margin-bottom: 28px;
+  .kicker {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--wk-mint); margin-bottom: 20px;
   }
-
   h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, #e8eaf0 30%, #8a93a8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(26px, 4.5vw, 44px);
+    line-height: 1.1; letter-spacing: -.02em;
+    color: var(--wk-white); margin-bottom: 18px;
+  }
+  h1 .grad {
+    background: var(--wk-gradient-1);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  .hero-sub { font-size: 15px; color: var(--wk-fg-subtle); line-height: 1.75; max-width: 500px; margin: 0 auto; }
 
-  .hero-sub {
-    color: var(--muted);
-    font-size: 16px;
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.75;
-  }
+  /* ── MAIN ── */
+  main { max-width: 720px; margin: 0 auto; padding: 0 24px 100px; }
 
-  /* ── MAIN CONTENT ── */
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 24px 100px;
-  }
-
-  /* ── SECTION WRAPPER ── */
+  /* ── SECTION ── */
   .section {
-    margin-bottom: 48px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 18px;
+    margin-bottom: 20px;
+    background: var(--wk-surface);
+    border: 1px solid var(--wk-border-card);
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: var(--wk-shadow-2);
   }
-
   .section-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 24px 28px 20px;
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 24px 16px;
+    border-bottom: 1px solid var(--wk-border-card);
   }
-
   .section-num {
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    background: #4f8ef714;
-    border: 1px solid #4f8ef730;
-    padding: 4px 10px;
-    border-radius: 6px;
-    flex-shrink: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 10px; font-weight: 500; letter-spacing: .12em;
+    color: var(--wk-blue);
+    background: rgba(10,82,217,.14);
+    border: 1px solid rgba(10,82,217,.22);
+    padding: 3px 10px; border-radius: 9999px; flex-shrink: 0;
   }
-
   .section-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px; font-weight: 500; letter-spacing: .01em;
+    color: var(--wk-white);
+    display: flex; align-items: center; gap: 9px;
   }
-
-  .section-body {
-    padding: 26px 28px;
-  }
+  .section-body { padding: 22px 24px; }
 
   /* ── CHECKLIST ── */
-  .checklist {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
+  .checklist { display: flex; flex-direction: column; gap: 10px; }
   .check-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 16px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 13px;
+    padding: 13px 15px;
+    background: var(--wk-surface2);
+    border: 1px solid var(--wk-border-card);
     border-radius: 12px;
-    transition: border-color 200ms;
-    cursor: pointer;
+    cursor: pointer; transition: border-color 180ms;
   }
-  .check-item:hover { border-color: #4f8ef740; }
-  .check-item.done { opacity: 0.55; }
-  .check-item.done .check-box { background: var(--green); border-color: var(--green); }
+  .check-item:hover { border-color: rgba(10,82,217,.3); }
+  .check-item.done { opacity: .5; }
+  .check-item.done .check-box { background: var(--wk-mint); border-color: var(--wk-mint); }
   .check-item.done .check-box::after {
-    content: '';
-    display: block;
+    content: ''; display: block;
     width: 5px; height: 9px;
-    border: 2px solid #fff;
-    border-top: none; border-left: none;
+    border: 2px solid #fff; border-top: none; border-left: none;
     transform: rotate(45deg) translate(1px,-1px);
   }
-
   .check-box {
-    width: 20px; height: 20px;
-    border-radius: 6px;
-    border: 1.5px solid #ffffff30;
-    flex-shrink: 0;
-    margin-top: 1px;
+    width: 19px; height: 19px; border-radius: 5px;
+    border: 1.5px solid rgba(255,255,255,.2);
+    flex-shrink: 0; margin-top: 1px;
     display: flex; align-items: center; justify-content: center;
   }
-
-  .check-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .check-text { font-size: 14px; color: var(--wk-white); line-height: 1.5; }
 
   /* ── TIP CARDS ── */
-  .tips-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  .tips-grid { display: flex; flex-direction: column; gap: 9px; }
   .tip-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 16px 18px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 13px;
+    padding: 14px 16px;
+    background: var(--wk-surface2);
+    border: 1px solid var(--wk-border-card);
     border-radius: 12px;
   }
-
   .tip-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: #4f8ef714;
-    border: 1px solid #4f8ef730;
+    width: 34px; height: 34px; border-radius: 10px;
+    background: rgba(10,82,217,.12); border: 1px solid rgba(10,82,217,.2);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    color: var(--accent);
-    font-size: 16px;
+    flex-shrink: 0; color: var(--wk-blue);
   }
-
-  .tip-content strong {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 3px;
-  }
-  .tip-content span {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+  .tip-content strong { display: block; font-size: 14px; font-weight: 600; color: var(--wk-white); margin-bottom: 2px; }
+  .tip-content span   { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.5; }
 
   /* ── STAR METHOD ── */
   .star-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 24px;
-    margin-top: 20px;
+    background: var(--wk-surface2);
+    border: 1px solid var(--wk-border-card);
+    border-radius: 14px; padding: 20px 22px; margin-top: 18px;
   }
-
   .star-box h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 16px;
-    letter-spacing: 0.03em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px; font-weight: 500; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--wk-periwinkle); margin-bottom: 16px;
   }
-
   .star-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 18px;
+    display: grid; grid-template-columns: repeat(2,1fr); gap: 9px; margin-bottom: 16px;
   }
-
   .star-item {
-    background: #ffffff06;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
+    background: rgba(255,255,255,.04); border: 1px solid var(--wk-border-card);
+    border-radius: 10px; padding: 12px 14px;
   }
-  .star-item .letter {
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--accent2);
-    line-height: 1;
-  }
-  .star-item .word {
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-    margin: 2px 0;
-  }
-  .star-item .desc {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
+  .star-item .letter { font-family: 'IBM Plex Sans', sans-serif; font-size: 20px; font-weight: 500; color: var(--wk-periwinkle); line-height: 1; }
+  .star-item .word   { font-size: 12px; font-weight: 600; color: var(--wk-white); margin: 2px 0; }
+  .star-item .desc   { font-size: 12px; color: rgba(255,255,255,.4); }
   .star-example {
-    background: #22c55e0d;
-    border: 1px solid #22c55e22;
-    border-radius: 10px;
-    padding: 14px 16px;
+    background: rgba(105,218,185,.08); border: 1px solid rgba(105,218,185,.18);
+    border-radius: 10px; padding: 13px 15px;
   }
   .star-example .ex-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    color: var(--green);
-    text-transform: uppercase;
-    margin-bottom: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 10px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--wk-mint); margin-bottom: 7px;
   }
-  .star-example p {
-    font-size: 13px;
-    color: #aab5c8;
-    line-height: 1.6;
-  }
-  .star-example strong { color: var(--text); }
+  .star-example p { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.65; }
+  .star-example strong { color: var(--wk-white); }
 
-  /* ── FAQ ACCORDION ── */
+  /* ── FAQ ── */
   .faq-list { display: flex; flex-direction: column; gap: 8px; }
-
   .faq-item {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
+    background: var(--wk-surface2); border: 1px solid var(--wk-border-card);
+    border-radius: 12px; overflow: hidden;
   }
-
   .faq-q {
-    width: 100%;
-    text-align: left;
-    padding: 16px 18px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: 'Open Sans', sans-serif;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    transition: background 200ms;
+    width: 100%; text-align: left;
+    padding: 15px 17px; background: none; border: none;
+    color: var(--wk-white); font-size: 14px; font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    transition: background 180ms;
   }
-  .faq-q:hover { background: #ffffff06; }
-
-  .faq-chevron {
-    flex-shrink: 0;
-    transition: transform 300ms;
-    color: var(--muted);
-  }
+  .faq-q:hover { background: rgba(255,255,255,.04); }
+  .faq-chevron { flex-shrink: 0; transition: transform 280ms; color: rgba(255,255,255,.3); }
   .faq-item.open .faq-chevron { transform: rotate(180deg); }
-
   .faq-a {
-    display: none;
-    padding: 0 18px 18px;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-    border-top: 1px solid var(--border);
+    display: none; padding: 0 17px 16px;
+    font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.7;
+    border-top: 1px solid var(--wk-border-card);
   }
-  .faq-item.open .faq-a { display: block; padding-top: 14px; }
-  .faq-a strong { color: var(--text); }
+  .faq-item.open .faq-a { display: block; padding-top: 13px; }
+  .faq-a strong { color: var(--wk-white); }
 
-  /* ── CLIENT PROFILE ── */
+  /* ── VALUES GRID ── */
   .values-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    margin-top: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+    gap: 10px; margin-top: 16px;
   }
-
   .value-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
+    background: var(--wk-surface2); border: 1px solid var(--wk-border-card);
+    border-radius: 12px; padding: 16px;
   }
+  .v-num {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 9px; font-weight: 500; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--wk-periwinkle); margin-bottom: 6px;
+  }
+  .v-title { font-size: 14px; font-weight: 600; color: var(--wk-white); margin-bottom: 4px; }
+  .v-desc  { font-size: 12px; color: rgba(255,255,255,.45); line-height: 1.55; }
 
-  .value-card .v-num {
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent2);
-    letter-spacing: 0.06em;
-    margin-bottom: 6px;
+  /* ── WORKABLE LINK ── */
+  #workable-link {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(10,82,217,.1); border: 1px solid rgba(10,82,217,.22);
+    border-radius: 12px; padding: 12px 15px; margin-bottom: 18px;
+    text-decoration: none; color: #5a85ff; font-size: 13px; font-weight: 500;
+    transition: background 180ms;
   }
-  .value-card .v-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .value-card .v-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+  #workable-link:hover { background: rgba(10,82,217,.18); }
 
+  /* ── HINT BOX ── */
   .hint-box {
-    margin-top: 18px;
-    background: #f5a6230d;
-    border: 1px solid #f5a62330;
-    border-radius: 12px;
-    padding: 16px 18px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
+    margin-top: 18px; background: rgba(105,218,185,.08);
+    border: 1px solid rgba(105,218,185,.2); border-radius: 12px;
+    padding: 14px 16px; display: flex; gap: 11px; align-items: flex-start;
   }
-  .hint-box .hint-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .hint-box p { font-size: 13px; color: #c9a87c; line-height: 1.6; }
-  .hint-box strong { color: #f5c06a; }
+  .hint-icon { color: var(--wk-mint); flex-shrink: 0; margin-top: 1px; }
+  .hint-box p { font-size: 13px; color: rgba(105,218,185,.85); line-height: 1.6; }
+  .hint-box strong { color: var(--wk-mint); }
 
-  /* ── SMART QUESTIONS ── */
-  .questions-list { display: flex; flex-direction: column; gap: 10px; }
-
+  /* ── QUESTIONS ── */
+  .questions-list { display: flex; flex-direction: column; gap: 9px; }
   .question-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 16px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color 200ms, background 200ms;
+    display: flex; align-items: flex-start; gap: 13px;
+    padding: 13px 15px;
+    background: var(--wk-surface2); border: 1px solid var(--wk-border-card);
+    border-radius: 12px; cursor: pointer; transition: border-color 180ms, background 180ms;
   }
-  .question-item:hover { border-color: #7c5cfc40; }
-  .question-item.selected {
-    border-color: #7c5cfc66;
-    background: #7c5cfc0a;
-  }
-
+  .question-item:hover { border-color: rgba(116,138,243,.3); }
+  .question-item.selected { border-color: rgba(116,138,243,.45); background: rgba(116,138,243,.08); }
   .q-dot {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid #ffffff25;
-    flex-shrink: 0;
-    margin-top: 2px;
+    width: 19px; height: 19px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.2);
+    flex-shrink: 0; margin-top: 2px;
     display: flex; align-items: center; justify-content: center;
-    transition: all 200ms;
+    transition: all 180ms;
   }
-  .question-item.selected .q-dot {
-    background: var(--accent2);
-    border-color: var(--accent2);
-  }
-  .question-item.selected .q-dot::after {
-    content: '';
-    width: 6px; height: 6px;
-    background: #fff;
-    border-radius: 50%;
-  }
-
-  .q-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .question-item.selected .q-dot { background: var(--wk-periwinkle); border-color: var(--wk-periwinkle); }
+  .question-item.selected .q-dot::after { content:''; width:6px; height:6px; background:#fff; border-radius:50%; }
+  .q-text { font-size: 14px; color: var(--wk-white); line-height: 1.5; }
 
   /* ── CLOSING ── */
   .closing {
-    text-align: center;
-    padding: 48px 28px;
-    border-top: 1px solid var(--border);
-    margin-top: 10px;
+    text-align: center; padding: 48px 24px;
+    border-top: 1px solid var(--wk-border-card);
   }
   .closing h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 14px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 22px; font-weight: 500; letter-spacing: -.01em;
+    color: var(--wk-white); margin-bottom: 12px;
   }
-  .closing p {
-    font-size: 15px;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto;
-    line-height: 1.8;
-  }
+  .closing p { font-size: 15px; color: var(--wk-fg-subtle); max-width: 500px; margin: 0 auto; line-height: 1.8; }
 
-  /* ── RESPONSIVE ── */
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 24px;
+    border-top: 1px solid var(--wk-border);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.18);
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  footer img { height: 16px; opacity: .3; }
+
   @media (max-width: 520px) {
-    .section-header { padding: 20px 18px 16px; }
-    .section-body { padding: 18px; }
+    .section-header { padding: 14px 18px 12px; }
+    .section-body { padding: 16px 18px; }
     .star-grid { grid-template-columns: 1fr 1fr; }
-    #toolbar { top: 10px; right: 10px; gap: 6px; }
-    .tool-btn { padding: 8px 12px; font-size: 12px; }
+    nav { padding: 14px 18px; }
+    .tool-btn { padding: 6px 11px; font-size: 11px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── TOOLBAR ── -->
-<div id="toolbar">
-  <button class="tool-btn" id="editToggle" onclick="toggleEdit()">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-    <span id="editLabel">Editar</span>
-  </button>
-  <button class="tool-btn" id="shareBtn" onclick="copyShareLink()">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-    <span id="shareBtnLabel">Copiar Link</span>
-  </button>
-</div>
+<div class="topbar"></div>
 
-<!-- ── HERO ── -->
-<header>
-  <div class="badge">
-    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    <span>Kit de Entrevista Workana</span>
+<nav>
+  <img src="/public/logos/workana-banner-dark.png" alt="Workana">
+  <div class="toolbar">
+    <button class="tool-btn" id="editToggle" onclick="toggleEdit()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <span id="editLabel">Editar</span>
+    </button>
+    <button class="tool-btn" id="shareBtn" onclick="copyShareLink()">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span id="shareBtnLabel">Copiar link</span>
+    </button>
   </div>
-  <h1>Llega preparado.<br>Muestra lo que ya sabes hacer.</h1>
+</nav>
+
+<header>
+  <div class="kicker" id="hero-kicker">Kit de Entrevista · Workana</div>
+  <h1>Llegá preparado.<br><span class="grad">Mostrá lo que ya sabés hacer.</span></h1>
   <p class="hero-sub">Esta guía fue diseñada para ayudarte a prepararte en menos de 10 minutos. La entrevista es una conversación, no un examen.</p>
 </header>
 
 <main>
 
-  <!-- ── SECTION 01 ── -->
+  <!-- 01 CHECKLIST -->
   <section class="section">
     <div class="section-header">
       <span class="section-num">01</span>
       <h2 class="section-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Checklist Antes de la Entrevista
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Checklist antes de la entrevista
       </h2>
     </div>
     <div class="section-body">
-      <div class="checklist" id="checklist">
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <span class="check-text">Conectarme 2 minutos antes para verificar que todo funcione correctamente.</span>
-        </div>
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <span class="check-text">Probar el audio, el video y el fondo antes de la llamada.</span>
-        </div>
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <span class="check-text">Asegurarme de estar en un lugar sin interrupciones ni ruido de fondo.</span>
-        </div>
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <span class="check-text">Buscar al entrevistador en LinkedIn para tener contexto antes de la llamada.</span>
-        </div>
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <span class="check-text">Preparar 2 o 3 ejemplos concretos con resultados específicos y medibles.</span>
-        </div>
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <span class="check-text">Tener en cuenta que un representante de Workana estará presente en la llamada.</span>
-        </div>
-
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Conectarme 2 minutos antes para verificar que todo funcione correctamente.</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Probar el audio, el video y el fondo antes de la llamada.</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Asegurarme de estar en un lugar sin interrupciones ni ruido de fondo.</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Buscar al entrevistador en LinkedIn para tener contexto antes de la llamada.</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Preparar 2 o 3 ejemplos concretos con resultados específicos y medibles.</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-text">Tener en cuenta que un representante de Workana estará presente en la llamada.</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ── SECTION 02 ── -->
+  <!-- 02 DURANTE -->
   <section class="section">
     <div class="section-header">
       <span class="section-num">02</span>
       <h2 class="section-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Durante la Entrevista
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Durante la entrevista
       </h2>
     </div>
     <div class="section-body">
       <div class="tips-grid">
-
         <div class="tip-card">
-          <div class="tip-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="tip-content">
-            <strong>Usa ejemplos concretos</strong>
-            <span>No hables en abstracto. Siempre ancla tus respuestas a situaciones reales que viviste.</span>
-          </div>
+          <div class="tip-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="tip-content"><strong>Usá ejemplos concretos</strong><span>No hables en abstracto. Siempre anclá tus respuestas a situaciones reales que viviste.</span></div>
         </div>
-
         <div class="tip-card">
-          <div class="tip-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          </div>
-          <div class="tip-content">
-            <strong>Habla con números cuando puedas</strong>
-            <span>"Cerré 18 cuentas" es mucho más poderoso que "cerré varias cuentas".</span>
-          </div>
+          <div class="tip-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="tip-content"><strong>Hablá con números cuando puedas</strong><span>"Cerré 18 cuentas" es mucho más poderoso que "cerré varias cuentas".</span></div>
         </div>
-
         <div class="tip-card">
-          <div class="tip-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </div>
-          <div class="tip-content">
-            <strong>Pausa antes de responder</strong>
-            <span>Es válido tomarte 3-5 segundos para pensar. Transmite reflexión, no inseguridad.</span>
-          </div>
+          <div class="tip-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="tip-content"><strong>Pausá antes de responder</strong><span>Es válido tomarte 3-5 segundos para pensar. Transmite reflexión, no inseguridad.</span></div>
         </div>
-
         <div class="tip-card">
-          <div class="tip-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <div class="tip-content">
-            <strong>Si no sabes algo, dilo</strong>
-            <span>"No tengo experiencia directa en eso, pero lo aprendería así..." es una respuesta honesta y válida.</span>
-          </div>
+          <div class="tip-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="tip-content"><strong>Si no sabés algo, decilo</strong><span>"No tengo experiencia directa en eso, pero lo aprendería así..." es una respuesta honesta y válida.</span></div>
         </div>
-
         <div class="tip-card">
-          <div class="tip-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </div>
-          <div class="tip-content">
-            <strong>Sé auténtico, no perfecto</strong>
-            <span>Los entrevistadores valoran la autenticidad más que las respuestas ensayadas.</span>
-          </div>
+          <div class="tip-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="tip-content"><strong>Sé auténtico, no perfecto</strong><span>Los entrevistadores valoran la autenticidad más que las respuestas ensayadas.</span></div>
         </div>
-
       </div>
 
-      <!-- STAR METHOD -->
       <div class="star-box">
-        <h3>⚡ Método STAR — Estructura tu respuesta</h3>
+        <h3>Método STAR — estructurá tu respuesta</h3>
         <div class="star-grid">
-          <div class="star-item">
-            <div class="letter">S</div>
-            <div class="word">Situación</div>
-            <div class="desc">¿Cuál era el contexto?</div>
-          </div>
-          <div class="star-item">
-            <div class="letter">T</div>
-            <div class="word">Tarea</div>
-            <div class="desc">¿Cuál era tu objetivo?</div>
-          </div>
-          <div class="star-item">
-            <div class="letter">A</div>
-            <div class="word">Acción</div>
-            <div class="desc">¿Qué hiciste específicamente?</div>
-          </div>
-          <div class="star-item">
-            <div class="letter">R</div>
-            <div class="word">Resultado</div>
-            <div class="desc">¿Cuál fue el impacto medible?</div>
-          </div>
+          <div class="star-item"><div class="letter">S</div><div class="word">Situación</div><div class="desc">¿Cuál era el contexto?</div></div>
+          <div class="star-item"><div class="letter">T</div><div class="word">Tarea</div><div class="desc">¿Cuál era tu objetivo?</div></div>
+          <div class="star-item"><div class="letter">A</div><div class="word">Acción</div><div class="desc">¿Qué hiciste específicamente?</div></div>
+          <div class="star-item"><div class="letter">R</div><div class="word">Resultado</div><div class="desc">¿Cuál fue el impacto medible?</div></div>
         </div>
         <div class="star-example">
           <div class="ex-label">Ejemplo real</div>
-          <p><strong>S:</strong> Tenía una cartera de 40 cuentas inactivas sin actividad en 6 meses. <strong>T:</strong> Mi objetivo era reactivarlas antes de cierre de trimestre. <strong>A:</strong> Hice un mapeo de cada cuenta, identifiqué el motivo de abandono y diseñé una propuesta personalizada por segmento. <strong>R:</strong> Reactivé <strong>18 cuentas</strong> y cerré contratos <strong>40% más altos</strong> que el trimestre anterior.</p>
+          <p><strong>S:</strong> Tenía una cartera de 40 cuentas inactivas sin actividad en 6 meses. <strong>T:</strong> Mi objetivo era reactivarlas antes del cierre de trimestre. <strong>A:</strong> Hice un mapeo de cada cuenta, identifiqué el motivo de abandono y diseñé una propuesta personalizada por segmento. <strong>R:</strong> Reactivé <strong>18 cuentas</strong> y cerré contratos <strong>40% más altos</strong> que el trimestre anterior.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── SECTION 03 ── -->
+  <!-- 03 FAQ -->
   <section class="section">
     <div class="section-header">
       <span class="section-num">03</span>
       <h2 class="section-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Preguntas Frecuentes
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Preguntas frecuentes
       </h2>
     </div>
     <div class="section-body">
       <div class="faq-list">
-
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            <span>Cuéntame sobre ti y tu trayectoria profesional</span>
-            <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            No recites tu CV. Cuenta una narrativa: de dónde vienes, qué aprendiste y por qué estás aquí. Incluye un logro concreto al final. <strong>Estructura sugerida:</strong> industria o área + años de experiencia + resultado más destacado + por qué te interesa este momento. Dura entre 60 y 90 segundos.
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Contame sobre vos y tu trayectoria profesional</span><svg class="faq-chevron" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">No recites tu CV. Contá una narrativa: de dónde venís, qué aprendiste y por qué estás acá. Incluí un logro concreto al final. <strong>Estructura sugerida:</strong> industria o área + años de experiencia + resultado más destacado + por qué te interesa este momento. Durá entre 60 y 90 segundos.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            <span>¿Cuál es tu mayor fortaleza y en qué área quieres crecer?</span>
-            <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            Elige una fortaleza relevante para el rol y respáldala con un ejemplo real. Para el área de mejora, elige algo genuino pero que no sea un riesgo crítico para el puesto, y muestra que ya estás trabajando en ello. <strong>Evita decir</strong> "soy demasiado perfeccionista" — los entrevistadores lo escuchan como falta de autoconsciencia.
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>¿Cuál es tu mayor fortaleza y en qué área querés crecer?</span><svg class="faq-chevron" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Elegí una fortaleza relevante para el rol y respaldala con un ejemplo real. Para el área de mejora, elegí algo genuino pero que no sea un riesgo crítico para el puesto, y mostrá que ya estás trabajando en ello. <strong>Evitá decir</strong> "soy demasiado perfeccionista" — los entrevistadores lo escuchan como falta de autoconsciencia.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            <span>Cuéntame de un momento en que enfrentaste un desafío difícil</span>
-            <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            Esta es una pregunta de comportamiento — usa el <strong>método STAR</strong>. El desafío no tiene que ser dramático, pero sí real. Lo que importa es mostrar cómo piensas y actúas bajo presión. Termina siempre con el resultado y lo que aprendiste del proceso.
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>Contame de un momento en que enfrentaste un desafío difícil</span><svg class="faq-chevron" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Esta es una pregunta de comportamiento — usá el <strong>método STAR</strong>. El desafío no tiene que ser dramático, pero sí real. Lo que importa es mostrar cómo pensás y actuás bajo presión. Terminá siempre con el resultado y lo que aprendiste del proceso.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            <span>¿Cómo manejas situaciones de presión o plazos ajustados?</span>
-            <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            Muestra un sistema concreto, no solo actitud. <strong>Ejemplo de estructura:</strong> "Cuando hay mucha presión, lo primero que hago es priorizar por impacto real, no por urgencia percibida. Luego comunico proactivamente si hay un riesgo de plazo. En [situación X] hice exactamente eso y logramos [resultado]."
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo manejás situaciones de presión o plazos ajustados?</span><svg class="faq-chevron" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Mostrá un sistema concreto, no solo actitud. <strong>Ejemplo de estructura:</strong> "Cuando hay mucha presión, lo primero que hago es priorizar por impacto real, no por urgencia percibida. Luego comunico proactivamente si hay un riesgo de plazo. En [situación X] hice exactamente eso y logramos [resultado]."</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            <span>¿Cuál ha sido tu logro profesional más significativo?</span>
-            <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            Usa el método STAR. Sé específico con números o impacto visible. No es momento de modestia: elige algo que demuestre las habilidades más relevantes para este rol. <strong>Si no tienes experiencia laboral:</strong> un proyecto académico, freelance o iniciativa personal también cuenta — lo que importa es la estructura de pensamiento.
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>¿Cuál fue tu logro profesional más significativo?</span><svg class="faq-chevron" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Usá el método STAR. Sé específico con números o impacto visible. No es momento de modestia: elegí algo que demuestre las habilidades más relevantes para este rol. <strong>Si no tenés experiencia laboral:</strong> un proyecto académico, freelance o iniciativa personal también cuenta — lo que importa es la estructura de pensamiento.</div>
         </div>
-
         <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            <span>¿Por qué te interesa esta oportunidad?</span>
-            <svg class="faq-chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            Conecta de forma genuina: ¿qué hay en este rol, empresa o momento que se alinea con lo que buscas? <strong>Evita respuestas genéricas</strong> como "busco crecer profesionalmente". Menciona algo específico que investigaste sobre la empresa o el tipo de trabajo que harías. Muestra que elegiste esta oportunidad, no que necesitas cualquier trabajo.
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)"><span>¿Por qué te interesa esta oportunidad?</span><svg class="faq-chevron" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Conectá de forma genuina: ¿qué hay en este rol, empresa o momento que se alinea con lo que buscás? <strong>Evitá respuestas genéricas</strong> como "busco crecer profesionalmente". Mencioná algo específico que investigaste sobre la empresa o el tipo de trabajo que harías. Mostrá que elegiste esta oportunidad, no que necesitás cualquier trabajo.</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── SECTION 04 ── -->
+  <!-- 04 CLIENTE -->
   <section class="section" id="section04">
     <div class="section-header">
       <span class="section-num">04</span>
-      <h2 class="section-title" id="s04-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-        <span id="s04-heading">Contexto del Cliente</span>
+      <h2 class="section-title">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span id="s04-heading">Contexto del cliente</span>
       </h2>
     </div>
     <div class="section-body">
 
-      <!-- Workable link banner (hidden if no URL) -->
-      <a id="workable-link" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;gap:10px;background:#4f8ef710;border:1px solid #4f8ef730;border-radius:12px;padding:13px 16px;margin-bottom:20px;text-decoration:none;color:var(--accent);font-size:13px;font-weight:600;transition:background 200ms;">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span id="workable-link-text">Ver descripción completa del puesto en Workable</span>
-        <svg style="margin-left:auto;opacity:.5" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <a id="workable-link" href="#" target="_blank" rel="noopener" style="display:none">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span id="workable-link-text">Ver descripción completa en Workable</span>
+        <svg style="margin-left:auto;opacity:.4" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       </a>
 
-      <p id="s04-desc" style="font-size:14px;color:var(--muted);margin-bottom:18px;line-height:1.7">Unifin es una empresa mexicana de arrendamiento financiero de equipos para PyMEs. Sus principales verticales incluyen maquinaria industrial, transporte, cómputo, agricultura y salud. El modelo es <strong style="color:var(--text)">arrendamiento puro de activos</strong>, no crédito.</p>
+      <p id="s04-desc" style="font-size:14px;color:rgba(255,255,255,.5);margin-bottom:2px;line-height:1.7"></p>
 
-      <div class="values-grid" id="s04-values">
+      <div class="values-grid" id="s04-values"></div>
 
-        <div class="value-card">
-          <div class="v-num">VALOR 01</div>
-          <div class="v-title">Autogestión</div>
-          <div class="v-desc">Capacidad de organizarse sin supervisión constante y generar resultados por iniciativa propia.</div>
-        </div>
-
-        <div class="value-card">
-          <div class="v-num">VALOR 02</div>
-          <div class="v-title">Prospección Activa</div>
-          <div class="v-desc">El perfil ideal no espera clientes: los busca en campo, en expos, en redes y por referidos.</div>
-        </div>
-
-        <div class="value-card">
-          <div class="v-num">VALOR 03</div>
-          <div class="v-title">Autonomía</div>
-          <div class="v-desc">Se espera que el asesor maneje su pipeline de forma independiente y tome decisiones propias.</div>
-        </div>
-
-        <div class="value-card">
-          <div class="v-num">VALOR 04</div>
-          <div class="v-title">Mentalidad de Crecimiento</div>
-          <div class="v-desc">Curiosidad constante, disposición a aprender nuevas verticales y adaptarse al mercado.</div>
-        </div>
-
-        <div class="value-card">
-          <div class="v-num">VALOR 05</div>
-          <div class="v-title">Colocación Real</div>
-          <div class="v-desc">Lo que importa es cerrar contratos y generar ingresos reales, no solo prospectar.</div>
-        </div>
-
-        <div class="value-card">
-          <div class="v-num">VALOR 06</div>
-          <div class="v-title">Perfil Ejecutor</div>
-          <div class="v-desc">Se valora a quien pasa de la estrategia a la acción rápidamente, sin parálisis por análisis.</div>
-        </div>
-
-      </div>
-
-      <div class="hint-box" id="s04-hint">
-        <div class="hint-icon">
-          <svg width="18" height="18" fill="none" stroke="#f5a623" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <p id="s04-hint-text"><strong>Pista estratégica:</strong> Si tienes experiencia en expos o eventos del sector transporte, logística, agro o industrial, <strong>menciónalo explícitamente</strong>. Es un diferenciador clave para este rol.</p>
+      <div class="hint-box" id="s04-hint" style="display:none">
+        <div class="hint-icon"><svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <p id="s04-hint-text"></p>
       </div>
 
     </div>
   </section>
 
-  <!-- ── SECTION 05 ── -->
+  <!-- 05 PREGUNTAS -->
   <section class="section">
     <div class="section-header">
       <span class="section-num">05</span>
       <h2 class="section-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        Preguntas Inteligentes para Hacerle al Entrevistador
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Preguntas inteligentes para hacerle al entrevistador
       </h2>
     </div>
     <div class="section-body">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Selecciona las preguntas que vas a usar. Hacer buenas preguntas demuestra preparación y criterio.</p>
-      <div class="questions-list" id="questionsList">
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Cuáles son las métricas de éxito para los primeros 6 meses en este rol?</span>
-        </div>
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Qué esperan que logre en mis primeros 90 días?</span>
-        </div>
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Cuál es el mayor desafío que enfrenta el equipo comercial actualmente?</span>
-        </div>
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Qué diferencia a los asesores que más colocan del resto del equipo?</span>
-        </div>
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Hay segmentos o verticales donde ven mayor oportunidad de crecimiento este año?</span>
-        </div>
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Cómo está estructurada la compensación variable y qué factores la determinan?</span>
-        </div>
-
-        <div class="question-item" onclick="toggleQuestion(this)">
-          <div class="q-dot"></div>
-          <span class="q-text">¿Cuáles son los siguientes pasos del proceso después de esta entrevista?</span>
-        </div>
-
+      <p style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:14px">Seleccioná las preguntas que vas a usar. Hacer buenas preguntas demuestra preparación y criterio.</p>
+      <div class="questions-list">
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Cuáles son las métricas de éxito para los primeros 6 meses en este rol?</span></div>
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Qué esperan que logre en mis primeros 90 días?</span></div>
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Cuál es el mayor desafío que enfrenta el equipo actualmente?</span></div>
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Qué diferencia a las personas que más se destacan del resto del equipo?</span></div>
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Hay áreas o verticales donde ven mayor oportunidad de crecimiento este año?</span></div>
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Cómo está estructurada la compensación variable y qué factores la determinan?</span></div>
+        <div class="question-item" onclick="toggleQuestion(this)"><div class="q-dot"></div><span class="q-text">¿Cuáles son los próximos pasos del proceso después de esta entrevista?</span></div>
       </div>
     </div>
 
-    <!-- CLOSING -->
     <div class="closing">
       <h2>La mejor entrevista deja de sentirse como un examen.</h2>
-      <p>Fuiste seleccionado porque tu perfil tiene valor real. Muestra quién eres y cómo piensas. La autenticidad es tu mejor argumento.</p>
+      <p>Fuiste seleccionado porque tu perfil tiene valor real. Mostrá quién sos y cómo pensás. La autenticidad es tu mejor argumento.</p>
     </div>
   </section>
 
 </main>
 
+<footer>
+  <img src="/public/logos/workana-banner-dark.png" alt="Workana">
+  <span>Talent Toolkit · Workana · 2026</span>
+</footer>
+
 <script>
-  // ── HYDRATE FROM CONFIG ──
-  // Priority: URL hash → localStorage
+  // ── HYDRATE FROM HASH OR LOCALSTORAGE ──
   (function() {
     let raw = null;
-    try {
-      const hash = window.location.hash.slice(1);
-      if (hash) raw = atob(hash);
-    } catch(e) {}
+    try { const h = window.location.hash.slice(1); if (h) raw = decodeURIComponent(escape(atob(h))); } catch(e) {}
     if (!raw) raw = localStorage.getItem('workana_toolkit_config');
     if (!raw) return;
     try {
       const cfg = JSON.parse(raw);
 
-      // Company name in heading
       if (cfg.companyName) {
-        document.getElementById('s04-heading').textContent = 'Contexto del Cliente: ' + cfg.companyName;
-        document.title = `Kit de Entrevista — ${cfg.companyName}${cfg.jobTitle ? ' · ' + cfg.jobTitle : ''}`;
+        const title = cfg.jobTitle ? `${cfg.companyName} · ${cfg.jobTitle}` : cfg.companyName;
+        document.getElementById('s04-heading').textContent = 'Contexto del cliente: ' + cfg.companyName;
+        document.getElementById('hero-kicker').textContent = `Kit de Entrevista · ${title}`;
+        document.title = `Kit de Entrevista — ${title}`;
       }
 
-      // Description
       if (cfg.companyDesc) {
         document.getElementById('s04-desc').textContent = cfg.companyDesc;
       }
 
-      // Values
       if (cfg.values && cfg.values.length) {
-        const grid = document.getElementById('s04-values');
-        grid.innerHTML = cfg.values.map((v, i) => `
+        document.getElementById('s04-values').innerHTML = cfg.values.map((v, i) => `
           <div class="value-card">
-            <div class="v-num">VALOR 0${i+1}</div>
-            <div class="v-title">${escHtml(v.title)}</div>
-            <div class="v-desc">${escHtml(v.desc)}</div>
+            <div class="v-num">${esc(v.num || 'PERFIL 0'+(i+1))}</div>
+            <div class="v-title">${esc(v.title)}</div>
+            <div class="v-desc">${esc(v.desc)}</div>
           </div>`).join('');
       }
 
-      // Hint
       if (cfg.hintText) {
-        document.getElementById('s04-hint-text').innerHTML =
-          '<strong>Pista estratégica:</strong> ' + escHtml(cfg.hintText);
+        document.getElementById('s04-hint').style.display = 'flex';
+        document.getElementById('s04-hint-text').innerHTML = '<strong>Pista estratégica:</strong> ' + esc(cfg.hintText);
       }
 
-      // Workable link
       if (cfg.workableUrl) {
         const link = document.getElementById('workable-link');
         link.href = cfg.workableUrl;
         link.style.display = 'flex';
       }
+    } catch(e) {}
 
-    } catch(e) { /* ignore bad data */ }
-
-    function escHtml(s) {
-      return String(s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
+    function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   })();
 
-  // ── CHECKLIST TOGGLE ──
-  function toggleCheck(el) {
-    if (document.body.classList.contains('edit-mode')) return;
-    el.classList.toggle('done');
-  }
+  // ── CHECKLIST ──
+  function toggleCheck(el) { if (!document.body.classList.contains('edit-mode')) el.classList.toggle('done'); }
 
-  // ── FAQ TOGGLE ──
-  function toggleFaq(btn) {
-    if (document.body.classList.contains('edit-mode')) return;
-    const item = btn.closest('.faq-item');
-    item.classList.toggle('open');
-  }
+  // ── FAQ ──
+  function toggleFaq(btn) { if (!document.body.classList.contains('edit-mode')) btn.closest('.faq-item').classList.toggle('open'); }
 
-  // ── QUESTION TOGGLE ──
-  function toggleQuestion(el) {
-    if (document.body.classList.contains('edit-mode')) return;
-    el.classList.toggle('selected');
-  }
+  // ── QUESTIONS ──
+  function toggleQuestion(el) { if (!document.body.classList.contains('edit-mode')) el.classList.toggle('selected'); }
 
   // ── EDIT MODE ──
   let editMode = false;
-  const EDITABLE_SELECTORS = [
-    'h1', 'h2', 'h3', 'p', 'span', 'strong', 'li',
-    '.check-text', '.tip-content strong', '.tip-content span',
-    '.faq-a', '.q-text', '.v-title', '.v-desc', '.v-num',
-    '.hero-sub', '.closing h2', '.closing p',
-    '.star-item .word', '.star-item .desc', '.star-item .letter',
-    '.star-example p', '.ex-label', '.hint-box p',
-    '.section-title', '.section-num', '.badge span'
-  ];
+  const EDITABLE = ['h1','h2','h3','p','.check-text','.tip-content strong','.tip-content span',
+    '.faq-a','.q-text','.v-title','.v-desc','.v-num','.hero-sub','.closing h2','.closing p',
+    '.star-item .word','.star-item .desc','.star-example p','.hint-box p',
+    '.section-title span','#s04-desc','#hero-kicker','.kicker'];
 
   function toggleEdit() {
     editMode = !editMode;
     const btn = document.getElementById('editToggle');
-    const label = document.getElementById('editLabel');
+    const lbl = document.getElementById('editLabel');
     btn.classList.toggle('active', editMode);
-    label.textContent = editMode ? 'Salir de edición' : 'Editar';
-
-    if (editMode) {
-      document.body.classList.add('edit-mode');
-      // Prevent interactive elements from firing while editing
-      document.querySelectorAll('.check-item, .faq-q, .question-item').forEach(el => {
-        el.style.pointerEvents = 'none';
+    lbl.textContent = editMode ? 'Listo' : 'Editar';
+    document.body.classList.toggle('edit-mode', editMode);
+    document.querySelectorAll('.check-item,.faq-q,.question-item').forEach(el => el.style.pointerEvents = editMode ? 'none' : '');
+    EDITABLE.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        if (!el.querySelector('div,section,article'))
+          editMode ? el.setAttribute('contenteditable','true') : el.removeAttribute('contenteditable');
       });
-      // Make text nodes editable
-      EDITABLE_SELECTORS.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-          // Don't make elements that contain other block elements editable
-          if (!el.querySelector('div, section, article')) {
-            el.setAttribute('contenteditable', 'true');
-          }
-        });
-      });
-    } else {
-      document.body.classList.remove('edit-mode');
-      document.querySelectorAll('.check-item, .faq-q, .question-item').forEach(el => {
-        el.style.pointerEvents = '';
-      });
-      document.querySelectorAll('[contenteditable]').forEach(el => {
-        el.removeAttribute('contenteditable');
-      });
-    }
+    });
   }
 
   // ── COPY SHARE LINK ──
   function copyShareLink() {
-    // Read current config from localStorage or hash
     let cfg = null;
     try {
-      const hash = window.location.hash.slice(1);
-      cfg = hash ? JSON.parse(atob(hash)) : JSON.parse(localStorage.getItem('workana_toolkit_config') || 'null');
+      const h = window.location.hash.slice(1);
+      cfg = h ? JSON.parse(decodeURIComponent(escape(atob(h)))) : JSON.parse(localStorage.getItem('workana_toolkit_config') || 'null');
     } catch(e) {}
 
-    let shareUrl;
-    if (cfg) {
-      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cfg))));
-      const base = window.location.href.split('#')[0];
-      shareUrl = base + '#' + encoded;
-    } else {
-      shareUrl = window.location.href;
-    }
+    const shareUrl = cfg
+      ? window.location.href.split('#')[0] + '#' + btoa(unescape(encodeURIComponent(JSON.stringify(cfg))))
+      : window.location.href;
 
     navigator.clipboard.writeText(shareUrl).then(() => {
       const btn = document.getElementById('shareBtn');
-      const label = document.getElementById('shareBtnLabel');
+      const lbl = document.getElementById('shareBtnLabel');
       btn.classList.add('copied');
-      label.textContent = '¡Copiado!';
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        label.textContent = 'Copiar Link';
-      }, 2500);
+      lbl.textContent = '¡Copiado!';
+      setTimeout(() => { btn.classList.remove('copied'); lbl.textContent = 'Copiar link'; }, 2500);
     });
   }
 </script>

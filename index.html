@@ -3,329 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workana Toolkit — Configurar</title>
+<title>Workana — Kit de Entrevista</title>
+<link rel="icon" href="/public/logos/workana-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0b0f1a;
-    --surface: #131929;
-    --surface2: #1a2235;
-    --border: #ffffff12;
-    --accent: #4f8ef7;
-    --accent2: #7c5cfc;
-    --gold: #f5a623;
-    --green: #22c55e;
-    --red: #ef4444;
-    --text: #e8eaf0;
-    --muted: #8a93a8;
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    font-weight: 500;
+    font-display: swap;
+    src: url('/public/fonts/ibm-plex-sans-medium.ttf') format('truetype');
   }
+
+  :root {
+    --wk-blue:        #0a52d9;
+    --wk-blue-hover:  #0848bc;
+    --wk-navy:        #002d72;
+    --wk-navy-deep:   #00143c;
+    --wk-cream:       #e8e8ca;
+    --wk-white:       #ffffff;
+    --wk-blue-soft:   #e8eefb;
+    --wk-mint:        #69dab9;
+    --wk-periwinkle:  #748af3;
+    --wk-lavender:    #dcb0e7;
+    --wk-near-black:  #1d1d1b;
+    --wk-fg-muted:    #4a5a7a;
+    --wk-fg-subtle:   #7a8aa6;
+    --wk-border:      rgba(255,255,255,0.10);
+    --wk-border-card: rgba(255,255,255,0.07);
+    --wk-surface:     rgba(255,255,255,0.04);
+    --wk-surface2:    rgba(255,255,255,0.07);
+    --wk-shadow-2:    0 6px 16px rgba(0,45,114,.18), 0 2px 4px rgba(0,45,114,.10);
+    --wk-gradient-1:  linear-gradient(120deg, #0a78ff 0%, #dcb0e7 100%);
+    --wk-gradient-2:  linear-gradient(120deg, #0053b8 0%, #86319b 100%);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    font-family: 'Open Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
+    font-family: 'Poppins', sans-serif;
+    background: var(--wk-navy-deep);
+    color: var(--wk-white);
+    line-height: 1.6;
     font-size: 15px;
     min-height: 100vh;
   }
 
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 4px;
+    background: var(--wk-gradient-2);
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--wk-border);
+  }
+  nav img { height: 28px; }
+  .nav-label {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--wk-fg-subtle);
+  }
+
+  /* ── HEADER ── */
   header {
-    padding: 72px 24px 48px;
+    padding: 64px 24px 48px;
     text-align: center;
-    max-width: 680px;
+    max-width: 640px;
     margin: 0 auto;
   }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #4f8ef714;
-    border: 1px solid #4f8ef733;
-    color: var(--accent);
+  .kicker {
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.09em;
+    font-weight: 500;
+    letter-spacing: .18em;
     text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 100px;
-    margin-bottom: 24px;
+    color: var(--wk-mint);
+    margin-bottom: 20px;
   }
   h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(24px, 4.5vw, 40px);
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
-    background: linear-gradient(135deg, #e8eaf0 30%, #8a93a8);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    color: var(--wk-white);
+    margin-bottom: 16px;
+  }
+  h1 .grad {
+    background: var(--wk-gradient-1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .hero-sub { color: var(--muted); font-size: 15px; line-height: 1.75; }
-
-  main {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 24px 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+  .hero-sub {
+    font-size: 15px;
+    color: var(--wk-fg-subtle);
+    line-height: 1.7;
   }
 
+  /* ── MAIN ── */
+  main {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── CARD ── */
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 18px;
+    background: var(--wk-surface);
+    border: 1px solid var(--wk-border-card);
+    border-radius: 20px;
     overflow: hidden;
+    box-shadow: var(--wk-shadow-2);
   }
   .card-header {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 20px 24px 18px;
-    border-bottom: 1px solid var(--border);
+    padding: 18px 24px 16px;
+    border-bottom: 1px solid var(--wk-border-card);
   }
-  .card-num {
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    background: #4f8ef714;
-    border: 1px solid #4f8ef730;
-    padding: 4px 10px;
-    border-radius: 6px;
+  .step-pill {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--wk-blue);
+    background: rgba(10,82,217,.15);
+    border: 1px solid rgba(10,82,217,.25);
+    padding: 3px 10px;
+    border-radius: 9999px;
     flex-shrink: 0;
   }
   .card-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .01em;
+    color: var(--wk-white);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
   }
-  .card-body { padding: 24px; }
+  .card-body { padding: 22px 24px; }
 
+  /* ── FORM ── */
   label {
     display: block;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
+    color: var(--wk-fg-subtle);
+    margin-bottom: 7px;
   }
-  .input-row {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-  }
+  .input-row { display: flex; gap: 8px; align-items: stretch; }
   input[type="url"],
   input[type="text"],
   textarea {
     width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-family: 'Open Sans', sans-serif;
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--wk-border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    color: var(--text);
+    color: var(--wk-white);
     outline: none;
-    transition: border-color 200ms;
+    transition: border-color 180ms;
     resize: vertical;
   }
-  input[type="url"]:focus,
-  input[type="text"]:focus,
-  textarea:focus { border-color: #4f8ef750; }
-  input::placeholder, textarea::placeholder { color: var(--muted); }
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,.22); }
+  input:focus, textarea:focus { border-color: rgba(10,82,217,.6); }
   .field { margin-bottom: 18px; }
   .field:last-child { margin-bottom: 0; }
+  .field-hint { margin-top: 5px; font-size: 12px; color: rgba(255,255,255,.3); }
 
   /* ── URL STATUS ── */
   .url-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-    font-size: 12px;
-    color: var(--muted);
-    min-height: 20px;
-    transition: color 200ms;
+    display: flex; align-items: center; gap: 7px;
+    margin-top: 7px; font-size: 12px;
+    color: rgba(255,255,255,.35); min-height: 18px;
   }
-  .url-status.valid { color: var(--green); }
-  .url-status.invalid { color: var(--red); }
-  .url-status.loading { color: var(--accent); }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+  .url-status.valid { color: var(--wk-mint); }
+  .url-status.invalid { color: #ff699d; }
+  .url-status.loading { color: #748af3; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
 
   /* ── IMPORT BUTTON ── */
   .btn-import {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 0 16px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 200ms, opacity 200ms;
-    flex-shrink: 0;
-    min-height: 44px;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 0 18px;
+    background: var(--wk-blue);
+    color: #fff; border: none; border-radius: 12px;
+    font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; white-space: nowrap;
+    transition: background 180ms, opacity 180ms;
+    flex-shrink: 0; min-height: 44px;
   }
-  .btn-import:hover { background: #3a7de8; }
-  .btn-import:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-import:hover { background: var(--wk-blue-hover); }
+  .btn-import:disabled { opacity: .4; cursor: not-allowed; }
 
-  /* ── IMPORT STATUS BANNER ── */
+  /* ── IMPORT BANNER ── */
   #importBanner {
-    display: none;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    background: #22c55e0d;
-    border: 1px solid #22c55e25;
-    border-radius: 12px;
-    margin-top: 16px;
+    display: none; align-items: center; gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px; margin-top: 14px;
     font-size: 13px;
-    color: var(--green);
   }
-  #importBanner.error {
-    background: #ef444410;
-    border-color: #ef444425;
-    color: var(--red);
-  }
-  #importBanner.loading {
-    background: #4f8ef710;
-    border-color: #4f8ef725;
-    color: var(--accent);
-  }
+  #importBanner.loading { background: rgba(116,138,243,.1); border: 1px solid rgba(116,138,243,.2); color: var(--wk-periwinkle); }
+  #importBanner.success { background: rgba(105,218,185,.1); border: 1px solid rgba(105,218,185,.2); color: var(--wk-mint); }
+  #importBanner.error   { background: rgba(255,105,157,.08); border: 1px solid rgba(255,105,157,.2); color: #ff699d; }
 
-  /* ── SECTION 2 (collapsed until data) ── */
-  #section2 {
-    transition: opacity 400ms;
-  }
-  #section2.dimmed { opacity: 0.4; pointer-events: none; }
+  /* ── SECTION 2 ── */
+  #section2 { transition: opacity 350ms; }
+  #section2.dimmed { opacity: .35; pointer-events: none; }
 
-  /* ── FORM FIELDS ── */
+  /* ── VALUE CARDS ── */
   .values-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-    gap: 10px;
-    margin-top: 4px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px; margin-top: 4px;
   }
   .value-card-edit {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--wk-border-card);
+    border-radius: 12px; padding: 14px;
   }
-  .value-card-edit .v-num-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--accent2);
-    text-transform: uppercase;
-    margin-bottom: 8px;
+  .v-num-label {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--wk-periwinkle); margin-bottom: 8px;
   }
-  .value-card-edit input {
-    margin-bottom: 6px;
-    padding: 8px 10px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .value-card-edit textarea {
-    padding: 8px 10px;
-    font-size: 12px;
-    min-height: 60px;
-  }
+  .value-card-edit input { margin-bottom: 6px; padding: 8px 10px; font-size: 13px; font-weight: 600; }
+  .value-card-edit textarea { padding: 8px 10px; font-size: 12px; min-height: 60px; }
 
+  /* ── HINT EDITOR ── */
   .hint-editor-row {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    margin-top: 4px;
-    background: #f5a6230d;
-    border: 1px solid #f5a62330;
-    border-radius: 12px;
-    padding: 14px;
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(105,218,185,.07);
+    border: 1px solid rgba(105,218,185,.18);
+    border-radius: 12px; padding: 14px;
   }
-  .hint-icon-fixed { color: #f5a623; flex-shrink: 0; margin-top: 2px; }
+  .hint-icon { color: var(--wk-mint); flex-shrink: 0; margin-top: 2px; }
   .hint-editor-row textarea {
-    background: #ffffff06;
-    border-color: #f5a62320;
-    font-size: 13px;
-    color: #c9a87c;
-    min-height: 68px;
+    background: rgba(255,255,255,.04);
+    border-color: rgba(105,218,185,.15);
+    font-size: 13px; color: rgba(255,255,255,.75); min-height: 64px;
   }
-  .hint-editor-row textarea:focus { border-color: #f5a62350; }
 
   /* ── SPINNER ── */
   .spinner {
-    width: 14px; height: 14px;
-    border: 2px solid currentColor;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-    flex-shrink: 0;
+    width: 13px; height: 13px;
+    border: 2px solid currentColor; border-top-color: transparent;
+    border-radius: 50%; animation: spin .55s linear infinite; flex-shrink: 0;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ── GENERATE ── */
   .generate-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0 4px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 8px 0;
   }
   .btn-generate {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-    color: #fff;
-    border: none;
-    border-radius: 14px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--wk-blue);
+    color: #fff; border: none; border-radius: 14px;
     padding: 15px 36px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 200ms, transform 200ms;
-    width: 100%;
-    justify-content: center;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: .04em;
+    cursor: pointer; width: 100%; justify-content: center;
+    transition: background 180ms, transform 150ms;
   }
-  .btn-generate:hover { opacity: 0.9; transform: translateY(-1px); }
-  .btn-generate:active { transform: translateY(0); }
-  .btn-note { font-size: 12px; color: var(--muted); text-align: center; }
+  .btn-generate:hover { background: var(--wk-blue-hover); transform: translateY(-1px); }
+  .btn-generate:active { transform: none; }
+  .btn-note { font-size: 12px; color: rgba(255,255,255,.28); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px; background: var(--wk-border-card); margin: 4px 0;
+  }
 
   @media (max-width: 480px) {
-    .card-header { padding: 16px 18px 14px; }
+    nav { padding: 16px 20px; }
+    .card-header { padding: 14px 18px 12px; }
     .card-body { padding: 18px; }
     .values-grid { grid-template-columns: 1fr; }
     .input-row { flex-direction: column; }
-    .btn-import { min-height: 42px; }
   }
 </style>
 </head>
 <body>
 
+<div class="topbar"></div>
+
+<nav>
+  <img src="/public/logos/workana-banner-dark.png" alt="Workana">
+  <span class="nav-label">Talent Toolkit</span>
+</nav>
+
 <header>
-  <div class="badge">
-    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    Workana Talent Toolkit
-  </div>
-  <h1>Configura el Kit de Entrevista</h1>
-  <p class="hero-sub">Pega el link de la posición en Workable y vamos a importar automáticamente el perfil del cliente para personalizar el kit.</p>
+  <div class="kicker">Talent Toolkit · Internal</div>
+  <h1>Configura el <span class="grad">Kit de Entrevista</span></h1>
+  <p class="hero-sub">Pegá el link de la posición en Workable y vamos a importar el perfil del cliente automáticamente.</p>
 </header>
 
 <main>
@@ -333,35 +328,36 @@
   <!-- PASO 1 -->
   <div class="card">
     <div class="card-header">
-      <span class="card-num">PASO 1</span>
+      <span class="step-pill">Paso 1</span>
       <h2 class="card-title">
-        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        Link de la Posición en Workable
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Link o código de la posición en Workable
       </h2>
     </div>
     <div class="card-body">
       <div class="field">
-        <label for="workableUrl">Código o URL de la posición en Workable</label>
+        <label for="workableUrl">URL o shortcode</label>
         <div class="input-row">
           <input type="url" id="workableUrl"
-            placeholder="230011639A  —  o pega el link completo de Workable"
+            placeholder="230011639A  —  o pega el link completo"
             oninput="onUrlInput()"
             onkeydown="if(event.key==='Enter') importFromWorkable()">
           <button class="btn-import" id="importBtn" onclick="importFromWorkable()" disabled>
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="3"/></svg>
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="3"/></svg>
             Importar
           </button>
         </div>
         <div class="url-status" id="urlStatus">
-          <span>Pega el link de Workable o solo el código de la posición</span>
+          <span>Pegá el link de Workable o solo el shortcode de la posición</span>
         </div>
         <div id="subdomainRow" style="display:none;margin-top:12px">
-          <label for="subdomainInput" style="margin-bottom:6px">Subdominio de la empresa en Workable</label>
-          <input type="text" id="subdomainInput" placeholder="ej: unifin  (de unifin.workable.com)" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
-          <p class="field-hint">Está en la URL: apply.workable.com/<strong>subdominio</strong>/j/...</p>
+          <label for="subdomainInput">Subdominio de la empresa</label>
+          <input type="text" id="subdomainInput"
+            placeholder="ej: unifin  (de unifin.workable.com)"
+            oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
+          <p class="field-hint">Está en la URL: apply.workable.com/<strong style="color:rgba(255,255,255,.5)">subdominio</strong>/j/…</p>
         </div>
       </div>
-
       <div id="importBanner">
         <span id="importBannerIcon"></span>
         <span id="importBannerText"></span>
@@ -372,10 +368,10 @@
   <!-- PASO 2 -->
   <div class="card dimmed" id="section2">
     <div class="card-header">
-      <span class="card-num">PASO 2</span>
+      <span class="step-pill">Paso 2</span>
       <h2 class="card-title">
-        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-        Perfil del Cliente — revisa y ajusta
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Perfil del cliente — revisá y ajustá
       </h2>
     </div>
     <div class="card-body">
@@ -387,28 +383,26 @@
 
       <div class="field">
         <label for="jobTitle">Posición</label>
-        <input type="text" id="jobTitle" placeholder="Ej: Asesor Comercial">
+        <input type="text" id="jobTitle" placeholder="Ej: Asesor Comercial Senior">
       </div>
 
       <div class="field">
         <label for="companyDesc">Descripción del rol y la empresa</label>
-        <textarea id="companyDesc" rows="3" placeholder="Describe brevemente qué hace la empresa y qué busca en el candidato..."></textarea>
+        <textarea id="companyDesc" rows="3" placeholder="Describí brevemente qué hace la empresa y qué busca en el candidato…"></textarea>
       </div>
 
       <div class="field">
-        <label>Perfil buscado — edita cada tarjeta</label>
-        <div class="values-grid" id="valuesGrid">
-          <!-- populated by JS -->
-        </div>
+        <label>Perfil buscado — editá cada tarjeta</label>
+        <div class="values-grid" id="valuesGrid"></div>
       </div>
 
       <div class="field">
         <label>Pista estratégica para el candidato</label>
         <div class="hint-editor-row">
-          <div class="hint-icon-fixed">
-            <svg width="18" height="18" fill="none" stroke="#f5a623" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <div class="hint-icon">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
-          <textarea id="hintText" placeholder="Ej: Si tienes experiencia en X, menciónalo. Es un diferenciador clave para este rol."></textarea>
+          <textarea id="hintText" placeholder="Ej: Si tenés experiencia en eventos del sector industrial, menciónalo. Es un diferenciador clave para este rol."></textarea>
         </div>
       </div>
 
@@ -418,21 +412,18 @@
   <!-- GENERATE -->
   <div class="generate-wrap" id="generateWrap" style="display:none">
     <button class="btn-generate" onclick="generateKit()">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Generar Kit de Entrevista
     </button>
-    <p class="btn-note">Se abrirá el kit listo para compartir con el candidato</p>
+    <p class="btn-note">Se abrirá el kit listo para compartir al candidato</p>
   </div>
 
 </main>
 
 <script>
-  // ── PARSE INPUT ──
   function parseInput(val) {
-    // Full URL: https://apply.workable.com/subdomain/j/SHORTCODE/
     const urlMatch = val.match(/apply\.workable\.com\/([a-z0-9-]+)\/j\/([A-Z0-9]+)/i);
     if (urlMatch) return { subdomain: urlMatch[1], shortcode: urlMatch[2].toUpperCase() };
-    // Bare shortcode only
     if (/^[A-Z0-9]{6,12}$/i.test(val.trim())) return { subdomain: null, shortcode: val.trim().toUpperCase() };
     return null;
   }
@@ -441,246 +432,157 @@
     const val = document.getElementById('workableUrl').value.trim();
     const btn = document.getElementById('importBtn');
     const status = document.getElementById('urlStatus');
-    const subdomainRow = document.getElementById('subdomainRow');
+    const subRow = document.getElementById('subdomainRow');
     const parsed = parseInput(val);
 
     if (!val) {
       status.className = 'url-status';
-      status.innerHTML = '<span>Pega el link de Workable o solo el código de la posición</span>';
-      btn.disabled = true;
-      subdomainRow.style.display = 'none';
-      return;
+      status.innerHTML = '<span>Pegá el link de Workable o solo el shortcode de la posición</span>';
+      btn.disabled = true; subRow.style.display = 'none'; return;
     }
     if (parsed) {
       if (parsed.subdomain) {
         status.className = 'url-status valid';
         status.innerHTML = `<span class="dot"></span><span>Detectado — empresa: <strong>${parsed.subdomain}</strong> · código: <strong>${parsed.shortcode}</strong></span>`;
-        subdomainRow.style.display = 'none';
+        subRow.style.display = 'none';
       } else {
         status.className = 'url-status valid';
-        status.innerHTML = `<span class="dot"></span><span>Código: <strong>${parsed.shortcode}</strong> — ¿de qué empresa?</span>`;
-        subdomainRow.style.display = 'block';
+        status.innerHTML = `<span class="dot"></span><span>Código <strong>${parsed.shortcode}</strong> — ¿de qué empresa?</span>`;
+        subRow.style.display = 'block';
       }
       btn.disabled = false;
     } else {
       status.className = 'url-status invalid';
-      status.innerHTML = `<span class="dot"></span><span>No se reconoce como URL de Workable ni código válido</span>`;
-      btn.disabled = true;
-      subdomainRow.style.display = 'none';
+      status.innerHTML = `<span class="dot"></span><span>No se reconoce como URL ni shortcode de Workable</span>`;
+      btn.disabled = true; subRow.style.display = 'none';
     }
   }
 
-  // ── IMPORT FROM WORKABLE ──
   async function importFromWorkable() {
     const val = document.getElementById('workableUrl').value.trim();
     const parsed = parseInput(val);
     if (!parsed) return;
     const subdomain = parsed.subdomain || document.getElementById('subdomainInput').value.trim();
-    if (!subdomain) {
-      document.getElementById('subdomainInput').focus();
-      return;
-    }
+    if (!subdomain) { document.getElementById('subdomainInput').focus(); return; }
     const shortcode = parsed.shortcode;
 
     const btn = document.getElementById('importBtn');
     btn.disabled = true;
-    btn.innerHTML = `<span class="spinner"></span> Importando...`;
-    setBanner('loading', '<span class="spinner"></span>', 'Conectando con Workable...');
+    btn.innerHTML = `<span class="spinner"></span> Importando…`;
+    setBanner('loading', '<span class="spinner"></span>', 'Conectando con Workable…');
 
     try {
       const res = await fetch(`/api/get-job?shortcode=${shortcode}&subdomain=${encodeURIComponent(subdomain)}`, {
         headers: { 'Accept': 'application/json' }
       });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${res.status}`);
-      }
-
+      if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error || `HTTP ${res.status}`); }
       const data = await res.json();
       window._importedShortlink = data.shortlink || '';
       populateFields(data);
-
       setBanner('success',
-        '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>',
+        '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>',
         `Importado: <strong>${data.title}</strong>${data.department ? ' — ' + data.department : ''}`
       );
-
       document.getElementById('section2').classList.remove('dimmed');
       document.getElementById('generateWrap').style.display = 'flex';
       document.getElementById('section2').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
     } catch(e) {
       setBanner('error',
-        '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+        '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
         `Error: ${e.message}`
       );
       document.getElementById('section2').classList.remove('dimmed');
       document.getElementById('generateWrap').style.display = 'flex';
     } finally {
       btn.disabled = false;
-      btn.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="3"/></svg> Importar`;
+      btn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="3"/></svg> Importar`;
     }
   }
 
   function setBanner(type, iconHtml, text) {
-    const banner = document.getElementById('importBanner');
-    const icon = document.getElementById('importBannerIcon');
-    const msg = document.getElementById('importBannerText');
-    banner.className = type === 'error' ? 'error' : type === 'loading' ? 'loading' : '';
-    banner.style.display = 'flex';
-    icon.innerHTML = iconHtml;
-    msg.innerHTML = text;
+    const b = document.getElementById('importBanner');
+    b.className = type; b.style.display = 'flex';
+    document.getElementById('importBannerIcon').innerHTML = iconHtml;
+    document.getElementById('importBannerText').innerHTML = text;
   }
 
-  // ── POPULATE FORM FIELDS FROM API DATA ──
   function populateFields(data) {
-    // Company name: derive from department or shortlink domain
-    let companyName = '';
-    if (data.shortlink) {
-      // e.g. https://apply.workable.com/j/230011639A — not useful
-      // Try to extract from department hierarchy
-    }
-    // Use department as company hint if available, else leave for user to fill
-    const dept = data.department || '';
-    // Best guess: first word(s) of department before "B2B", "LATAM", etc.
-    const deptClean = dept.replace(/\b(B2B|B2C|LATAM|EMEA|USA|EU|APAC|Global)\b.*$/i, '').trim();
-    companyName = deptClean || '';
-
-    document.getElementById('companyName').value = companyName;
+    const dept = (data.department || '').replace(/\b(B2B|B2C|LATAM|EMEA|USA|EU|APAC|Global)\b.*/i,'').trim();
+    document.getElementById('companyName').value = dept || '';
     document.getElementById('jobTitle').value = data.title || '';
 
-    // Extract description text
-    const descText = htmlToPlain(data.description || '');
-    const reqText = htmlToPlain(data.requirements || '');
-    const benText = htmlToPlain(data.benefits || '');
+    const intro = htmlToText(data.description || '').split('\n')[0].trim();
+    document.getElementById('companyDesc').value = intro.substring(0, 400);
 
-    // Intro paragraph = text before first section header
-    const introMatch = descText.match(/^([\s\S]+?)(?=¿|•|\n\n)/);
-    const intro = introMatch ? introMatch[1].trim() : descText.split('\n')[0];
-    document.getElementById('companyDesc').value = intro || descText.substring(0, 300);
+    const buscamos = extractSection(data.description || '', ['BUSCAMOS','PERFIL','BUSCAMOS EN VOS']);
+    const reqs     = extractBullets(data.requirements || '');
+    let bullets = buscamos.length >= 3 ? buscamos : reqs.length >= 3 ? reqs : extractBullets(data.description || '');
+    while (bullets.length < 6) bullets.push('');
+    bullets = bullets.slice(0, 6);
 
-    // Extract "BUSCAMOS" bullets for value cards
-    const buscamosBullets = extractSection(data.description || '', ['BUSCAMOS', 'BUSCAMOS?', 'PERFIL', 'BUSCAMOS EN VOS', 'QUÉ BUSCAMOS']);
-    const hacemosBullets = extractSection(data.description || '', ['VAS A HACER', 'HARÁS', 'RESPONSABILIDADES', 'QUÉ HARÁS']);
-    const reqBullets = extractBullets(data.requirements || '');
-
-    // Pick best source for value cards
-    let valueBullets = buscamosBullets.length >= 3 ? buscamosBullets
-                      : reqBullets.length >= 3 ? reqBullets
-                      : hacemosBullets;
-
-    // Fill up to 6 cards
-    while (valueBullets.length < 6) valueBullets.push('');
-    valueBullets = valueBullets.slice(0, 6);
-
-    // Render value cards
     const grid = document.getElementById('valuesGrid');
-    grid.innerHTML = valueBullets.map((bullet, i) => {
-      const titleWords = bullet.split(/[:\-,.]/, 1)[0].trim();
-      const shortTitle = titleWords.split(' ').slice(0, 4).join(' ');
-      return `
-        <div class="value-card-edit">
-          <div class="v-num-label">Perfil 0${i+1}</div>
-          <input type="text" class="val-title" value="${esc(shortTitle)}" placeholder="Título del perfil">
-          <textarea class="val-desc" placeholder="Descripción...">${esc(bullet)}</textarea>
-        </div>`;
+    grid.innerHTML = bullets.map((b, i) => {
+      const title = b.split(/[:\-,.]/)[0].trim().split(' ').slice(0,4).join(' ');
+      return `<div class="value-card-edit">
+        <div class="v-num-label">Perfil 0${i+1}</div>
+        <input type="text" class="val-title" value="${esc(title)}" placeholder="Título">
+        <textarea class="val-desc">${esc(b)}</textarea>
+      </div>`;
     }).join('');
 
-    // Hint from benefits or first requirement
-    const hint = benText
-      ? benText.split('\n').filter(Boolean).slice(0, 2).join(' • ')
-      : reqBullets[0] || '';
-    document.getElementById('hintText').value = hint;
+    const bens = extractBullets(data.benefits || '');
+    document.getElementById('hintText').value = bens.slice(0,2).join(' · ') || '';
   }
 
-  // ── HTML HELPERS ──
-  function htmlToPlain(html) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || '';
+  function htmlToText(html) {
+    const d = document.createElement('div'); d.innerHTML = html;
+    return d.textContent || '';
   }
-
   function extractBullets(html) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    return Array.from(tmp.querySelectorAll('li'))
-      .map(li => li.textContent.trim())
-      .filter(Boolean);
+    const d = document.createElement('div'); d.innerHTML = html;
+    return Array.from(d.querySelectorAll('li')).map(l => l.textContent.trim()).filter(Boolean);
   }
-
-  function extractSection(html, sectionKeywords) {
-    // Find a heading that matches, return the <li> items in the following <ul>
-    const tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    const elements = Array.from(tmp.children);
-
-    for (let i = 0; i < elements.length; i++) {
-      const el = elements[i];
-      const text = el.textContent.toUpperCase();
-      const matches = sectionKeywords.some(kw => text.includes(kw.toUpperCase()));
-      if (matches) {
-        // Look for next ul
-        for (let j = i + 1; j < elements.length; j++) {
-          const next = elements[j];
-          if (next.tagName === 'UL' || next.tagName === 'OL') {
-            return Array.from(next.querySelectorAll('li'))
-              .map(li => li.textContent.trim())
-              .filter(Boolean);
-          }
-          if (next.tagName === 'P' && next.textContent.trim() === '') continue;
-          break;
+  function extractSection(html, keywords) {
+    const d = document.createElement('div'); d.innerHTML = html;
+    const els = Array.from(d.children);
+    for (let i = 0; i < els.length; i++) {
+      if (keywords.some(k => els[i].textContent.toUpperCase().includes(k))) {
+        for (let j = i+1; j < els.length; j++) {
+          if (els[j].tagName === 'UL' || els[j].tagName === 'OL')
+            return Array.from(els[j].querySelectorAll('li')).map(l => l.textContent.trim()).filter(Boolean);
+          if (els[j].textContent.trim()) break;
         }
       }
     }
-    // Fallback: try searching for the keyword inline (description may have mixed structure)
-    return extractSectionInline(html, sectionKeywords);
-  }
-
-  function extractSectionInline(html, sectionKeywords) {
-    // Sometimes all is inside one <p> block — try grabbing all li items as fallback
     return extractBullets(html);
   }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  function esc(s) {
-    return String(s)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  // ── GENERATE KIT ──
   function generateKit() {
-    const workableUrl = window._importedShortlink || document.getElementById('workableUrl').value.trim();
-    const companyName = document.getElementById('companyName').value.trim();
-    const jobTitle = document.getElementById('jobTitle').value.trim();
-    const companyDesc = document.getElementById('companyDesc').value.trim();
-    const hintText = document.getElementById('hintText').value.trim();
-
-    const values = [];
-    document.querySelectorAll('.value-card-edit').forEach((card, i) => {
-      values.push({
+    const data = {
+      workableUrl:  window._importedShortlink || document.getElementById('workableUrl').value.trim(),
+      companyName:  document.getElementById('companyName').value.trim(),
+      jobTitle:     document.getElementById('jobTitle').value.trim(),
+      companyDesc:  document.getElementById('companyDesc').value.trim(),
+      hintText:     document.getElementById('hintText').value.trim(),
+      values: Array.from(document.querySelectorAll('.value-card-edit')).map((c,i) => ({
         num: `PERFIL 0${i+1}`,
-        title: card.querySelector('.val-title').value.trim(),
-        desc: card.querySelector('.val-desc').value.trim()
-      });
-    });
-
-    const data = { workableUrl, companyName, jobTitle, companyDesc, hintText, values };
-
-    // Encode config into URL hash — shareable link, no server needed
+        title: c.querySelector('.val-title').value.trim(),
+        desc:  c.querySelector('.val-desc').value.trim()
+      }))
+    };
     const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-    localStorage.setItem('workana_toolkit_config', JSON.stringify(data)); // fallback
+    localStorage.setItem('workana_toolkit_config', JSON.stringify(data));
     window.location.href = 'toolkit-unifin.html#' + encoded;
   }
 
-  // ── INIT: render 6 empty value cards ──
-  (function init() {
-    const grid = document.getElementById('valuesGrid');
-    grid.innerHTML = Array.from({ length: 6 }, (_, i) => `
+  // Init empty value cards
+  (function() {
+    document.getElementById('valuesGrid').innerHTML = Array.from({length:6},(_,i) => `
       <div class="value-card-edit">
         <div class="v-num-label">Perfil 0${i+1}</div>
-        <input type="text" class="val-title" value="" placeholder="Nombre del perfil">
-        <textarea class="val-desc" placeholder="Descripción..."></textarea>
+        <input type="text" class="val-title" placeholder="Nombre del perfil">
+        <textarea class="val-desc" placeholder="Descripción…"></textarea>
       </div>`).join('');
   })();
 </script>
