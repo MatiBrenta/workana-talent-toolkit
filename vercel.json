@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/api/get-job", "destination": "/api/get-job" }
-  ]
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "framework": null
 }
