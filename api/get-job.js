@@ -10,7 +10,10 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'WORKABLE_API_KEY no configurada en variables de entorno' });
   }
 
-  const subdomain = process.env.WORKABLE_SUBDOMAIN || 'workana-premium';
+  const subdomain = req.query.subdomain;
+  if (!subdomain || !/^[a-z0-9-]+$/i.test(subdomain)) {
+    return res.status(400).json({ error: 'subdomain requerido (se extrae del link de Workable)' });
+  }
 
   try {
     const response = await fetch(

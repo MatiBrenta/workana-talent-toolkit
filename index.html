@@ -353,7 +353,12 @@
           </button>
         </div>
         <div class="url-status" id="urlStatus">
-          <span>Pega el link de la oferta — importaremos el perfil automáticamente</span>
+          <span>Pega el link de Workable o solo el código de la posición</span>
+        </div>
+        <div id="subdomainRow" style="display:none;margin-top:12px">
+          <label for="subdomainInput" style="margin-bottom:6px">Subdominio de la empresa en Workable</label>
+          <input type="text" id="subdomainInput" placeholder="ej: unifin  (de unifin.workable.com)" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
+          <p class="field-hint">Está en la URL: apply.workable.com/<strong>subdominio</strong>/j/...</p>
         </div>
       </div>
 
@@ -422,13 +427,13 @@
 </main>
 
 <script>
-  // ── PARSE INPUT — accept full URL or bare shortcode ──
-  function extractShortcode(val) {
-    // Full URL: https://apply.workable.com/company/j/SHORTCODE/
-    const urlMatch = val.match(/\/j\/([A-Z0-9]+)/i);
-    if (urlMatch) return urlMatch[1].toUpperCase();
-    // Bare shortcode: 230011639A
-    if (/^[A-Z0-9]{6,12}$/i.test(val.trim())) return val.trim().toUpperCase();
+  // ── PARSE INPUT ──
+  function parseInput(val) {
+    // Full URL: https://apply.workable.com/subdomain/j/SHORTCODE/
+    const urlMatch = val.match(/apply\.workable\.com\/([a-z0-9-]+)\/j\/([A-Z0-9]+)/i);
+    if (urlMatch) return { subdomain: urlMatch[1], shortcode: urlMatch[2].toUpperCase() };
+    // Bare shortcode only
+    if (/^[A-Z0-9]{6,12}$/i.test(val.trim())) return { subdomain: null, shortcode: val.trim().toUpperCase() };
     return null;
   }
 
@@ -436,30 +441,46 @@
     const val = document.getElementById('workableUrl').value.trim();
     const btn = document.getElementById('importBtn');
     const status = document.getElementById('urlStatus');
-    const shortcode = extractShortcode(val);
+    const subdomainRow = document.getElementById('subdomainRow');
+    const parsed = parseInput(val);
 
     if (!val) {
       status.className = 'url-status';
-      status.innerHTML = '<span>Pega el link de Workable o solo el código de la posición (ej: 230011639A)</span>';
+      status.innerHTML = '<span>Pega el link de Workable o solo el código de la posición</span>';
       btn.disabled = true;
+      subdomainRow.style.display = 'none';
       return;
     }
-    if (shortcode) {
-      status.className = 'url-status valid';
-      status.innerHTML = `<span class="dot"></span><span>Código detectado: <strong>${shortcode}</strong></span>`;
+    if (parsed) {
+      if (parsed.subdomain) {
+        status.className = 'url-status valid';
+        status.innerHTML = `<span class="dot"></span><span>Detectado — empresa: <strong>${parsed.subdomain}</strong> · código: <strong>${parsed.shortcode}</strong></span>`;
+        subdomainRow.style.display = 'none';
+      } else {
+        status.className = 'url-status valid';
+        status.innerHTML = `<span class="dot"></span><span>Código: <strong>${parsed.shortcode}</strong> — ¿de qué empresa?</span>`;
+        subdomainRow.style.display = 'block';
+      }
       btn.disabled = false;
     } else {
       status.className = 'url-status invalid';
-      status.innerHTML = `<span class="dot"></span><span>No se reconoce como URL de Workable ni código de posición</span>`;
+      status.innerHTML = `<span class="dot"></span><span>No se reconoce como URL de Workable ni código válido</span>`;
       btn.disabled = true;
+      subdomainRow.style.display = 'none';
     }
   }
 
   // ── IMPORT FROM WORKABLE ──
   async function importFromWorkable() {
     const val = document.getElementById('workableUrl').value.trim();
-    const shortcode = extractShortcode(val);
-    if (!shortcode) return;
+    const parsed = parseInput(val);
+    if (!parsed) return;
+    const subdomain = parsed.subdomain || document.getElementById('subdomainInput').value.trim();
+    if (!subdomain) {
+      document.getElementById('subdomainInput').focus();
+      return;
+    }
+    const shortcode = parsed.shortcode;
 
     const btn = document.getElementById('importBtn');
     btn.disabled = true;
@@ -467,7 +488,7 @@
     setBanner('loading', '<span class="spinner"></span>', 'Conectando con Workable...');
 
     try {
-      const res = await fetch(`/api/get-job?shortcode=${shortcode}`, {
+      const res = await fetch(`/api/get-job?shortcode=${shortcode}&subdomain=${encodeURIComponent(subdomain)}`, {
         headers: { 'Accept': 'application/json' }
       });
 
